@@ -30,6 +30,23 @@ class TestCase(unittest.TestCase):
     def test_no_integers(self):
         self.assert_extract("no integers", library.integers)
 
+    #Fourth unit test; prove that if we look for date, we get dates   
+    def test_dates(self):
+        self.assert_extract("I was born on 2015-07-25.", library.dates_iso8601, '2015-07-25')
+
+    #Fifth unit test: prove that we give wrong date, it returns no results  
+    def test_wrong_dates(self):
+        self.assert_extract("wrong date - 2015-14-32 ", library.dates_iso8601) 
+
+    #prove that, if we look for format2 date, we get that     
+    def test_dates_fmt2(self):
+        self.assert_extract("I was born on 25 Jan 2017.", library.dates_fmt2, '25 Jan 2017')
+
+    #prove that, if we look for iso dates with time stamp, we get that   
+    #def test_dates_with_timestamp(self):
+        #self.assert_extract("Date with timestamp 2018-06-22-18", library.dates_iso8601, '2018-06-22 18:22:19.123')
+      
+
 
 if __name__ == '__main__':
     unittest.main()
