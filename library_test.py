@@ -41,11 +41,38 @@ class TestCase(unittest.TestCase):
     #prove that, if we look for format2 date, we get that     
     def test_dates_fmt2(self):
         self.assert_extract("I was born on 25 Jan 2017.", library.dates_fmt2, '25 Jan 2017')
+  
+    def test_dates_timestamp_with_space_delimiter(self):
+        self.assert_extract("Date with timestamp 2018-06-22 18:22:19.123", library.dates_iso8601, '2018-06-22 18:22:19.123')
 
-    #prove that, if we look for iso dates with time stamp, we get that   
-    #def test_dates_with_timestamp(self):
-        #self.assert_extract("Date with timestamp 2018-06-22-18", library.dates_iso8601, '2018-06-22 18:22:19.123')
-      
+    def test_dates_timestamp_space_delimiter_ends_MDT(self):
+        self.assert_extract("Date with timestamp 2018-06-22 18:22:19.123MDT", library.dates_iso8601, '2018-06-22 18:22:19.123MDT')
+
+    def test_dates_timestamp_space_delimiter_ends_with_Z(self):
+        self.assert_extract("Date with timestamp 2018-06-22 18:22:19.123Z", library.dates_iso8601, '2018-06-22 18:22:19.123Z')
+
+    def test_dates_timestamp_space_delimiter_ends_0800(self):
+        self.assert_extract("Date with timestamp 2018-06-22 18:22:19.123-0800", library.dates_iso8601, '2018-06-22 18:22:19.123-0800')     
+
+    def test_dates_timestamp_with_T_delimiter(self):
+        self.assert_extract("Date with timestamp 2018-06-22T18:22:19.123", library.dates_iso8601, '2018-06-22T18:22:19.123')   
+
+    def test_dates_timestamp_T_delimiter_ends_MDT(self):
+        self.assert_extract("Date with timestamp 2018-06-22T18:22:19.123MDT", library.dates_iso8601, '2018-06-22T18:22:19.123MDT')
+
+    def test_dates_timestamp_T_delimiter_ends_with_Z(self):
+        self.assert_extract("Date with timestamp 2018-06-22T18:22:19.123Z", library.dates_iso8601, '2018-06-22T18:22:19.123Z')
+
+    def test_dates_timestamp_T_delimiter_ends_0800(self):
+        self.assert_extract("Date with timestamp 2018-06-22T18:22:19.123-0800", library.dates_iso8601, '2018-06-22T18:22:19.123-0800')
+
+    
+    def test_dates_fmt2_with_comma(self):
+        self.assert_extract("Date with 25 Jun, 2017", library.dates_fmt2, '25 Jun, 2017')
+
+    def test_integers_with_comma(self):
+        self.assert_extract("comma separated number - 123,456,789", library.integers, '123,456,789')           
+    
 
 
 if __name__ == '__main__':
